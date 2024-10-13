@@ -97,7 +97,7 @@ export const preloadCachingFetch = async (url: string): Promise<void> => {
     cache.set(url, data);
   } catch (err) {
     throw new Error(
-      `preloadCachingFetch has encountered and error. Error: ${err}`
+      `preloadCachingFetch has encountered an error. Error: ${err}`
     );
   }
 };
@@ -118,8 +118,19 @@ export const preloadCachingFetch = async (url: string): Promise<void> => {
  * 4. This file passes a type-check.
  *
  */
-export const serializeCache = (): string => "";
+export const serializeCache = (): string => {
+  const cacheEntries = Array.from(cache.entries());
+  return JSON.stringify(cacheEntries);
+};
 
-export const initializeCache = (serializedCache: string): void => {};
+export const initializeCache = (serializedCache: string): void => {
+  const entries = JSON.parse(serializedCache);
 
-export const wipeCache = (): void => {};
+  for (const [key, value] of entries) {
+    cache.set(key, value);
+  }
+};
+
+export const wipeCache = (): void => {
+  cache.clear();
+};
