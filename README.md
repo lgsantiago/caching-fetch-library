@@ -34,13 +34,13 @@ A brief description of your web application and its purpose.
 ##### Clone the repository
 
 ```bash
-git clone https://github.com/yourusername/yourprojectname.git
+git clone https://github.com/lgsantiago/caching-fetch-library.git
 ```
 
 ##### Navigate to the project directory
 
 ```bash
-cd yourprojectname
+cd caching-fetch-library
 ```
 
 ##### Install dependencies
