@@ -10,7 +10,8 @@ A brief description of your web application and its purpose.
 4. [Installation](#installation)
 5. [Usage](#usage)
 6. [Contact](#contact)
-7. [Future Improvements](#contact)
+7. [Next Steps](#next-steps)
+8. [Potential Issues](#potential-issues)
 
 ## Features
 
