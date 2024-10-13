@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from "react";
 // You may edit this file, add new files to support this file,
 // and/or add new dependencies to the project as you see fit.
 // However, you must not change the surface API presented from this file,
@@ -5,9 +6,12 @@
 
 type UseCachingFetch = (url: string) => {
   isLoading: boolean;
-  data: unknown;
+  data: object | null;
   error: Error | null;
 };
+
+// Initialize cache
+const cache = new Map<string, any>();
 
 /**
  * 1. Implement a caching fetch hook. The hook should return an object with the following properties:
@@ -28,12 +32,43 @@ type UseCachingFetch = (url: string) => {
  *
  */
 export const useCachingFetch: UseCachingFetch = (url) => {
+  const [data, setData] = useState<object | null>(() => {
+    if (cache.has(url)) {
+      return cache.get(url);
+    } else {
+      return null;
+    }
+  });
+
+  const [isLoading, setIsLoading] = useState<boolean>(() => !cache.has(url));
+  const [error, setError] = useState<Error | null>(null);
+
+  useEffect(() => {
+    if (cache.has(url)) {
+      setData(cache.get(url));
+      setIsLoading(false);
+      return;
+    }
+
+    setIsLoading(true);
+
+    fetch(url)
+      .then((response) => response.json())
+      .then((data) => {
+        cache.set(url, data);
+        setData(data);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        setError(err);
+        setIsLoading(false);
+      });
+  }, [url]);
+
   return {
-    data: null,
-    isLoading: false,
-    error: new Error(
-      "UseCachingFetch has not been implemented, please read the instructions in DevTask.md"
-    ),
+    data,
+    isLoading,
+    error,
   };
 };
 
