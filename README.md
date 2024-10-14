@@ -1,6 +1,4 @@
-# Project Title
-
-A brief description of your web application and its purpose.
+# Caching Fetch Library
 
 ## Table of Contents
 
